@@ -9,14 +9,14 @@ let lastCartId = 0;
 // Método POST para crear un nuevo carrito
 router.post('/api/carts/', (req, res) => {
   const newCart = req.body;
-  const cartsData = fs.readFileSync('../data/carts.json', 'utf8');
+  const cartsData = fs.readFileSync('./data/carts.json', 'utf8');
   const carts = JSON.parse(cartsData);
 
   newCart.id = ++lastCartId; //ID unico y Aumenta el contador y usa el nuevo valor como ID
 
   carts.push(newCart);
 
-  fs.writeFileSync('../data/carts.json', JSON.stringify(carts, null, 2));
+  fs.writeFileSync('./data/carts.json', JSON.stringify(carts, null, 2));
 
   res.status(201).json(newCart);
 });
@@ -24,7 +24,7 @@ router.post('/api/carts/', (req, res) => {
 //Método GET  para listar los productos de un carrito
 router.get('/api/carts/list/:cid', (req, res) => {
   const cartId = req.params.cid;
-  const cartsData = fs.readFileSync('../data/carts.json', 'utf8');
+  const cartsData = fs.readFileSync('./data/carts.json', 'utf8');
   const carts = JSON.parse(cartsData);
 
   const cart = carts.find((c) => c.id === cartId);
@@ -42,7 +42,7 @@ router.post('/api/carts/add/:cid/product/:pid', (req, res) => {
   const productId = req.params.pid;
   const quantity = req.body.quantity;
 
-  const cartsData = fs.readFileSync('../data/carts.json', 'utf8');
+  const cartsData = fs.readFileSync('./data/carts.json', 'utf8');
   const carts = JSON.parse(cartsData);
 
   const cart = carts.find((c) => c.id === cartId);
@@ -59,7 +59,7 @@ router.post('/api/carts/add/:cid/product/:pid', (req, res) => {
 
   cart.products.push(product);
 
-  fs.writeFileSync('../data/carts.json', JSON.stringify(carts, null, 2));
+  fs.writeFileSync('./data/carts.json', JSON.stringify(carts, null, 2));
 
   res.status(201).json(product);
 });

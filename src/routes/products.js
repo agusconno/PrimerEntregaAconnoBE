@@ -6,7 +6,7 @@ let lastProductId = 0; // Inicializa el contador
 
 // método GET para listar los productos con limitación
 router.get('/api/products/', (req, res) => {
-  const productsData = fs.readFileSync('../data/products.json'  , 'utf8');
+  const productsData = fs.readFileSync('./data/products.json'  , 'utf8');
   const products = JSON.parse(productsData);
 
   const limit = req.query.limit;
@@ -25,7 +25,7 @@ router.get('/api/products/', (req, res) => {
 // método GET /:pid para obtener un producto por su ID
 router.get('/api/products/:pid', (req, res) => {
   const productId = req.params.pid;
-  const productsData = fs.readFileSync('../data/products.json', 'utf8');
+  const productsData = fs.readFileSync('./data/products.json', 'utf8');
   const products = JSON.parse(productsData);
 
   const product = products.find((p) => p.id === productId);
@@ -40,7 +40,7 @@ router.get('/api/products/:pid', (req, res) => {
 // Método POST para agregar un nuevo producto
 router.post('/api/products/new/', (req, res) => {
   const newProduct = req.body;
-  const productsData = fs.readFileSync('../data/products.json', 'utf8');
+  const productsData = fs.readFileSync('./data/products.json', 'utf8');
   const products = JSON.parse(productsData);
 
   newProduct.id = ++lastProductId; //ID unico y Aumenta el contador y usa el nuevo valor como ID
@@ -56,7 +56,7 @@ router.post('/api/products/new/', (req, res) => {
 router.put('/api/products/update/:pid', (req, res) => {
   const productId = req.params.pid;
   const updatedProductData = req.body;
-  const productsData = fs.readFileSync('../data/products.json', 'utf8');
+  const productsData = fs.readFileSync('./data/products.json', 'utf8');
   const products = JSON.parse(productsData);
 
   const product = products.find((p) => p.id === productId);
@@ -66,7 +66,7 @@ router.put('/api/products/update/:pid', (req, res) => {
   }
 
   // lógica para actualizar el producto con los datos enviados
-  fs.writeFileSync('../data/products.json', JSON.stringify(products, null, 2));
+  fs.writeFileSync('./data/products.json', JSON.stringify(products, null, 2));
 
   res.json(updatedProductData);
 });
@@ -74,7 +74,7 @@ router.put('/api/products/update/:pid', (req, res) => {
 // método DELETE /:pid para un producto
 router.delete('/api/products/delete/:pid', (req, res) => {
   const productId = req.params.pid;
-  const productsData = fs.readFileSync('../data/products.json', 'utf8');
+  const productsData = fs.readFileSync('./data/products.json', 'utf8');
   const products = JSON.parse(productsData);
 
   const index = products.findIndex((p) => p.id === productId);
@@ -84,7 +84,7 @@ router.delete('/api/products/delete/:pid', (req, res) => {
   }
 
   products.splice(index, 1);
-  fs.writeFileSync('../data/products.json', JSON.stringify(products, null, 2));
+  fs.writeFileSync('./data/products.json', JSON.stringify(products, null, 2));
 
   res.status(204).end();
 });
